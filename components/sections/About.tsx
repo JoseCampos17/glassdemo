@@ -1,9 +1,16 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { Container } from "../ui/Container";
 import { Heading } from "../ui/Heading";
+import { DICTIONARY } from "@/constants/content";
+import { useLanguage } from "../LanguageContext";
 
 export const About = () => {
+  const { locale } = useLanguage();
+  const d = DICTIONARY[locale].about;
+
   return (
     <section id="nosotros" className="py-24 bg-white overflow-hidden">
       <Container>
@@ -21,31 +28,31 @@ export const About = () => {
               />
             </div>
             <div className="absolute bottom-10 -right-4 lg:right-0 bg-white p-6 shadow-xl rounded-xl z-20 border border-slate-100 max-w-[200px]">
-                <p className="text-accent font-bold text-xl mb-1">Calidad ISO</p>
-                <p className="text-xs text-secondary leading-tight">Certificados en los más altos estándares de seguridad y eficiencia.</p>
+                <p className="text-accent font-bold text-xl mb-1">{d.isoQuality}</p>
+                <p className="text-xs text-secondary leading-tight">{d.isoDesc}</p>
             </div>
           </div>
 
           <div className="w-full lg:w-1/2">
-            <p className="text-accent font-bold uppercase tracking-widest text-sm mb-4">Sobre Nosotros</p>
+            <p className="text-accent font-bold uppercase tracking-widest text-sm mb-4">{d.badge}</p>
             <Heading level={2} className="mb-8">
-              Innovación y Transparencia en Cada Detalle
+              {d.title}
             </Heading>
             <p className="text-secondary text-lg leading-relaxed mb-6">
-              Empresa líder con más de 15 años transformando espacios a través del vidrio y el aluminio. Nuestra filosofía se basa en la precisión técnica y la excelencia estética.
+              {d.description1}
             </p>
             <p className="text-secondary text-lg leading-relaxed mb-10">
-              Ubicados en el corazón de la industria nacional, colaboramos con arquitectos y constructoras de primer nivel para llevar la luz natural a su máxima expresión, garantizando siempre el aislamiento térmico y acústico.
+              {d.description2}
             </p>
             
             <div className="grid grid-cols-2 gap-8">
                 <div>
-                    <h4 className="text-primary font-bold text-lg mb-2">Misión</h4>
-                    <p className="text-sm text-secondary">Proveer soluciones arquitectónicas sostenibles que mejoren la vida de las personas.</p>
+                    <h4 className="text-primary font-bold text-lg mb-2">{d.mission.title}</h4>
+                    <p className="text-sm text-secondary">{d.mission.desc}</p>
                 </div>
                 <div>
-                    <h4 className="text-primary font-bold text-lg mb-2">Visión</h4>
-                    <p className="text-sm text-secondary">Ser el referente indiscutible en fachadas de vidrio de alto rendimiento en Europa.</p>
+                    <h4 className="text-primary font-bold text-lg mb-2">{d.vision.title}</h4>
+                    <p className="text-sm text-secondary">{d.vision.desc}</p>
                 </div>
             </div>
           </div>

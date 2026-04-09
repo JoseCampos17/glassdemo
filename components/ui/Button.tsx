@@ -35,8 +35,9 @@ export const Button = ({
   const finalClassName = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
 
   if (href) {
+    const { type, ...rest } = props;
     return (
-      <Link href={href} className={finalClassName}>
+      <Link href={href} className={finalClassName} {...(rest as any)}>
         {children}
       </Link>
     );

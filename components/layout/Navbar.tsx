@@ -3,10 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Container } from "../ui/Container";
-import { NAV_LINKS, SITE_CONFIG } from "@/constants/content";
+import { DICTIONARY, SITE_CONFIG } from "@/constants/content";
 import { Button } from "../ui/Button";
+import { useLanguage } from "../LanguageContext";
 
 export const Navbar = () => {
+  const { locale, toggleLanguage } = useLanguage();
+  const d = DICTIONARY[locale];
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -36,7 +39,7 @@ export const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-8">
-          {NAV_LINKS.map((link: { name: string; href: string }) => (
+          {d.nav.map((link) => (
             <Link
               key={link.name}
               href={link.href}
@@ -47,16 +50,34 @@ export const Navbar = () => {
               {link.name}
             </Link>
           ))}
+          
+          <div className="flex items-center space-x-2 border-l border-white/20 pl-6 ml-2">
+            <button 
+                onClick={toggleLanguage}
+                className={`text-xs font-bold transition-all px-2 py-1 rounded ${
+                    locale === 'es' ? "bg-accent text-white" : scrolled ? "text-secondary hover:text-accent" : "text-white/60 hover:text-white"
+                }`}
+            >
+                ES
+            </button>
+            <button 
+                onClick={toggleLanguage}
+                className={`text-xs font-bold transition-all px-2 py-1 rounded ${
+                    locale === 'en' ? "bg-accent text-white" : scrolled ? "text-secondary hover:text-accent" : "text-white/60 hover:text-white"
+                }`}
+            >
+                EN
+            </button>
+          </div>
+
           <Button 
             size="sm" 
             variant={scrolled ? "primary" : "none"} 
             className={!scrolled ? "border-2 border-white text-white hover:bg-white hover:text-primary font-bold" : ""}
             href="#contacto"
           >
-
-            Presupuesto
+            {d.common.requestQuote}
           </Button>
-
         </div>
 
         {/* Mobile Toggle */}
@@ -81,7 +102,21 @@ export const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-slate-100 absolute w-full left-0 py-6 px-4 shadow-xl">
             <div className="flex flex-col space-y-4">
-                {NAV_LINKS.map((link: { name: string; href: string }) => (
+                <div className="flex justify-center space-x-4 mb-4 pb-4 border-b border-slate-50">
+                    <button 
+                        onClick={() => { toggleLanguage(); }}
+                        className={`px-4 py-2 rounded-lg font-bold text-sm ${locale === 'es' ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500'}`}
+                    >
+                        Español
+                    </button>
+                    <button 
+                        onClick={() => { toggleLanguage(); }}
+                        className={`px-4 py-2 rounded-lg font-bold text-sm ${locale === 'en' ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500'}`}
+                    >
+                        English
+                    </button>
+                </div>
+                {d.nav.map((link) => (
                     <Link
                         key={link.name}
                         href={link.href}
@@ -91,8 +126,9 @@ export const Navbar = () => {
                         {link.name}
                     </Link>
                 ))}
-                <Button size="lg" className="w-full mt-4" href="#contacto" onClick={() => setIsMenuOpen(false)}>Solicitar Presupuesto</Button>
-
+                <Button size="lg" className="w-full mt-4" href="#contacto" onClick={() => setIsMenuOpen(false)}>
+                    {d.common.requestQuoteFull}
+                </Button>
             </div>
         </div>
       )}

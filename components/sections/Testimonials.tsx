@@ -1,27 +1,22 @@
+"use client";
+
 import React from "react";
 import { Container } from "../ui/Container";
 import { Heading } from "../ui/Heading";
+import { DICTIONARY } from "@/constants/content";
+import { useLanguage } from "../LanguageContext";
 
 export const Testimonials = () => {
-    const testimonials = [
-        {
-            quote: "La precisión en la instalación de los muros cortina en nuestro edificio corporativo fue excepcional. Un socio de confianza.",
-            author: "Carlos Méndez",
-            role: "Director de Proyectos, InmoCorp",
-        },
-        {
-            quote: "Buscábamos eficiencia energética y estética para nuestra casa pasiva. LuxGlass superó todas las expectativas.",
-            author: "Elena Sanz",
-            role: "Arquitecta Independiente",
-        },
-    ];
+    const { locale } = useLanguage();
+    const d = DICTIONARY[locale].testimonials;
+    const testimonials = d.items;
 
     return (
         <section className="py-24 bg-primary text-white">
             <Container>
                 <div className="text-center mb-16">
-                    <p className="text-accent font-bold uppercase tracking-widest text-sm mb-4">Testimonios</p>
-                    <Heading level={2} className="text-white">Lo que dicen nuestros clientes</Heading>
+                    <p className="text-accent font-bold uppercase tracking-widest text-sm mb-4">{d.badge}</p>
+                    <Heading level={2} className="text-white">{d.title}</Heading>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

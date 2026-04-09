@@ -1,26 +1,33 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { Container } from "../ui/Container";
 import { Heading } from "../ui/Heading";
-import { SERVICES } from "@/constants/content";
+import { DICTIONARY } from "@/constants/content";
 import { IMAGES } from "@/constants/images";
+import { useLanguage } from "../LanguageContext";
 
 export const Services = () => {
+  const { locale } = useLanguage();
+  const d = DICTIONARY[locale];
+  const s = d.services;
+
   return (
     <section id="servicios" className="py-24 bg-light">
       <Container>
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-accent font-bold uppercase tracking-widest text-sm mb-4">Lo que hacemos</p>
+          <p className="text-accent font-bold uppercase tracking-widest text-sm mb-4">{s.badge}</p>
           <Heading level={2} className="mb-6">
-            Soluciones Integrales en Aluminio y Vidrio
+            {s.title}
           </Heading>
           <p className="text-secondary text-lg">
-            Combinamos tecnología de vanguardia con artesanía tradicional para ofrecer los mejores resultados en cada obra.
+            {s.description}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {SERVICES.map((service: { title: string; description: string; image: string }) => {
+          {s.items.map((service) => {
             const imageKey = service.image.replace("/", "") as keyof typeof IMAGES.services;
             const imageUrl = IMAGES.services[imageKey];
 
@@ -43,7 +50,7 @@ export const Services = () => {
                     {service.description}
                   </p>
                   <button className="text-accent font-bold text-sm uppercase tracking-wider flex items-center group-hover:translate-x-2 transition-transform duration-300">
-                    Saber más 
+                    {d.common.learnMore} 
                     <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

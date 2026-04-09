@@ -1,10 +1,17 @@
+"use client";
+
 import React from "react";
 import { Container } from "../ui/Container";
-import { SITE_CONFIG, NAV_LINKS } from "@/constants/content";
+import { SITE_CONFIG, DICTIONARY } from "@/constants/content";
 import { WhatsAppIcon, InstagramIcon, FacebookIcon } from "../ui/Icons";
+import { useLanguage } from "../LanguageContext";
 
 
 export const Footer = () => {
+    const { locale } = useLanguage();
+    const d = DICTIONARY[locale];
+    const f = d.footer;
+
     return (
         <footer className="bg-primary pt-20 pb-10 text-white border-t border-white/5">
             <Container>
@@ -15,14 +22,14 @@ export const Footer = () => {
                             <span className="text-accent">{SITE_CONFIG.name.split(" ")[1]}</span>
                         </span>
                         <p className="text-white/50 text-lg max-w-sm leading-relaxed">
-                            Liderando la industria del vidrio y aluminio con soluciones arquitectónicas de alto rendimiento desde hace más de una década.
+                            {f.summary}
                         </p>
                     </div>
                     
                     <div>
-                        <h4 className="font-bold uppercase tracking-widest text-sm mb-6 text-accent">Navegación</h4>
+                        <h4 className="font-bold uppercase tracking-widest text-sm mb-6 text-accent">{f.navigation}</h4>
                         <ul className="space-y-4">
-                            {NAV_LINKS.map((link: { name: string; href: string }) => (
+                            {d.nav.map((link) => (
                                 <li key={link.name}>
                                     <a href={link.href} className="text-white/60 hover:text-white transition-colors">{link.name}</a>
                                 </li>
@@ -31,10 +38,10 @@ export const Footer = () => {
                     </div>
 
                     <div>
-                        <h4 className="font-bold uppercase tracking-widest text-sm mb-6 text-accent">Legal</h4>
+                        <h4 className="font-bold uppercase tracking-widest text-sm mb-6 text-accent">{f.legal}</h4>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-white/60 hover:text-white transition-colors">Aviso Legal</a></li>
-                            <li><a href="#" className="text-white/60 hover:text-white transition-colors">Política de Privacidad</a></li>
+                            <li><a href="#" className="text-white/60 hover:text-white transition-colors">{locale === 'es' ? 'Aviso Legal' : 'Legal Notice'}</a></li>
+                            <li><a href="#" className="text-white/60 hover:text-white transition-colors">{locale === 'es' ? 'Política de Privacidad' : 'Privacy Policy'}</a></li>
                             <li><a href="#" className="text-white/60 hover:text-white transition-colors">Cookies</a></li>
                         </ul>
                     </div>
@@ -56,10 +63,10 @@ export const Footer = () => {
 
                 <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-white/30 text-sm">
-                        © {new Date().getFullYear()} {SITE_CONFIG.name}. Todos los derechos reservados.
+                        {f.rights.replace('{year}', new Date().getFullYear().toString()).replace('{name}', SITE_CONFIG.name)}
                     </p>
                     <div className="flex space-x-6 text-white/30 text-sm">
-                        <p>Desarrollado con precisión técnica por Antigravity</p>
+                        <p>{f.dev}</p>
                     </div>
                 </div>
             </Container>
