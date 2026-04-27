@@ -8,8 +8,8 @@ export const IMAGES = {
   projects: [
     "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2072&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=2070&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000",
+    "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=2000",
   ],
   logo: "https://images.unsplash.com/photo-1535491740775-f8db46b68e91?q=80&w=2070&auto=format&fit=crop",
   efficiency: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2000&auto=format&fit=crop",
