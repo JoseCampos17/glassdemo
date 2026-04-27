@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { LanguageProvider } from "@/components/LanguageContext";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import "@/styles/globals.css";
 
 const geistSans = Geist({
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LuxGlass Solutions | Glass & Window Excellence",
-  description: "Artesanía en vidrio y ventanas de alto rendimiento para proyectos arquitectónicos.",
+  title: "Nuvo PVC | Ventanas y Puertas de Alta Eficiencia",
+  description: "Especialistas en ventanas y puertas de PVC en Chile. Aislación térmica superior, diseño moderno y precios directos de fábrica.",
 };
 
 export default function RootLayout({
@@ -37,6 +38,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <WhatsAppButton />
         </LanguageProvider>
       </body>
     </html>
