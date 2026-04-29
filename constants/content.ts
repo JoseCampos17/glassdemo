@@ -152,7 +152,7 @@ export const DICTIONARY = {
       navigation: "Navegación",
       legal: "Legal",
       rights: "© {year} {name}. Todos los derechos reservados.",
-      dev: "Desarrollado para Nuvo PVC por Antigravity",
+      dev: "Sitio web diseñado y desarrollado por jgcampo17@gmail.com",
     },
   },
   en: {
@@ -291,7 +291,7 @@ export const DICTIONARY = {
       navigation: "Navigation",
       legal: "Legal",
       rights: "© {year} {name}. All rights reserved.",
-      dev: "Developed for Nuvo PVC by Antigravity",
+      dev: "Website designed and developed by jgcampo17@gmail.com",
     },
   },
 };
