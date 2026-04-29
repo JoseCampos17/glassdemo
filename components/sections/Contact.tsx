@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef } from "react";
+import emailjs from '@emailjs/browser';
 import { Container } from "../ui/Container";
 import { Heading } from "../ui/Heading";
 import { Button } from "../ui/Button";
@@ -12,6 +13,37 @@ export const Contact = () => {
     const { locale } = useLanguage();
     const d = DICTIONARY[locale];
     const c = d.contact;
+
+    const form = useRef<HTMLFormElement>(null);
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+    const sendEmail = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!form.current) return;
+
+        setStatus('loading');
+
+        const publicKey = "F-FuHzyZ9eM3pbZkY";
+        const serviceID = "service_tgj93ub";
+        const templateID = "template_14uylrk";
+
+        emailjs.sendForm(serviceID, templateID, form.current, {
+            publicKey: publicKey,
+        })
+            .then(
+                () => {
+                    setStatus('success');
+                    form.current?.reset();
+                    setTimeout(() => setStatus('idle'), 5000);
+                },
+                (error) => {
+                    console.log('FAILED...', error.text);
+                    setStatus('error');
+                    setTimeout(() => setStatus('idle'), 5000);
+                },
+            );
+    };
 
     return (
         <section id="contacto" className="py-24 bg-white">
@@ -60,28 +92,70 @@ export const Contact = () => {
                     </div>
 
                     <div className="lg:w-1/2 bg-white p-10 lg:p-20">
-                        <form className="space-y-6">
+                        <form ref={form} onSubmit={sendEmail} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.name}</label>
-                                    <input type="text" className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none" placeholder={c.form.namePlaceholder} />
+                                    <input type="text" name="name" required className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none text-primary" placeholder={c.form.namePlaceholder} />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.company}</label>
-                                    <input type="text" className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none" placeholder={c.form.companyPlaceholder} />
+                                    <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.email}</label>
+                                    <input type="email" name="email" required className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none text-primary" placeholder={c.form.emailPlaceholder} />
                                 </div>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.email}</label>
-                                <input type="email" className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none" placeholder={c.form.emailPlaceholder} />
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.phone}</label>
+                                    <input type="tel" name="phone" className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none text-primary" placeholder={c.form.phonePlaceholder} />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.projectType}</label>
+                                    <select name="project_type" defaultValue="" className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none text-primary">
+                                        <option value="" disabled>{c.form.projectTypePlaceholder}</option>
+                                        <option value="ventanas">{c.form.projectTypeOptions.ventanas}</option>
+                                        <option value="puertas">{c.form.projectTypeOptions.puertas}</option>
+                                        <option value="termpaneles">{c.form.projectTypeOptions.termpaneles}</option>
+                                        <option value="otro">{c.form.projectTypeOptions.otro}</option>
+                                    </select>
+                                </div>
                             </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.width}</label>
+                                    <input type="number" name="width" className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none text-primary" placeholder={c.form.widthPlaceholder} />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.height}</label>
+                                    <input type="number" name="height" className="w-full bg-light border-none rounded-lg p-4 focus:ring-2 focus:ring-accent outline-none text-primary" placeholder={c.form.heightPlaceholder} />
+                                </div>
+                            </div>
+                            
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-primary uppercase tracking-wider">{c.form.message}</label>
-                                <textarea className="w-full bg-light border-none rounded-lg p-4 h-32 focus:ring-2 focus:ring-accent outline-none resize-none" placeholder={c.form.messagePlaceholder}></textarea>
+                                <textarea name="message" required className="w-full bg-light border-none rounded-lg p-4 h-32 focus:ring-2 focus:ring-accent outline-none resize-none text-primary" placeholder={c.form.messagePlaceholder}></textarea>
                             </div>
-                            <Button size="lg" className="w-full py-5 text-xl font-bold uppercase tracking-widest shadow-xl shadow-accent/20">
-                                {d.common.send}
+                            
+                            <Button 
+                                type="submit" 
+                                size="lg" 
+                                disabled={status === 'loading'}
+                                className="w-full py-5 text-xl font-bold uppercase tracking-widest shadow-xl shadow-accent/20 disabled:opacity-70"
+                            >
+                                {status === 'loading' ? c.form.sending : d.common.send}
                             </Button>
+
+                            {status === 'success' && (
+                                <p className="text-green-500 font-bold text-center mt-4">
+                                    {c.form.success}
+                                </p>
+                            )}
+                            {status === 'error' && (
+                                <p className="text-red-500 font-bold text-center mt-4">
+                                    {c.form.error}
+                                </p>
+                            )}
                         </form>
                     </div>
                 </div>

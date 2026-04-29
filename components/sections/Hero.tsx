@@ -27,6 +27,7 @@ export const Hero = () => {
           src={IMAGES.hero}
           alt="Modern Architectural Glass"
           fill
+          sizes="100vw"
           className="object-cover brightness-[0.4]"
           priority
         />
